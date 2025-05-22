@@ -1,7 +1,6 @@
 
 import StatCard from "@/components/dashboard/StatCard";
-import TablePlaceholder from "@/components/dashboard/TablePlaceholder";
-import ChartPlaceholder from "@/components/dashboard/ChartPlaceholder";
+import RoleTabs from "@/components/dashboard/RoleTabs";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 const EmployeeDashboard = () => {
@@ -37,23 +36,8 @@ const EmployeeDashboard = () => {
         />
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <ChartPlaceholder 
-          title="Weekly Task Completion" 
-          description="Your productivity over the last 7 days"
-        />
-        
-        <TablePlaceholder 
-          title="Your Tasks" 
-          description="Your current and upcoming tasks"
-          columns={[
-            { header: "Task", width: "40%" },
-            { header: "Project" },
-            { header: "Priority" },
-            { header: "Due Date" },
-            { header: "Status" },
-          ]}
-        />
+      <div className="mt-8">
+        <RoleTabs />
       </div>
     </div>
   );

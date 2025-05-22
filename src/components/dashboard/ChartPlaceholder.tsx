@@ -5,15 +5,17 @@ interface ChartPlaceholderProps {
   title: string;
   description?: string;
   height?: number | string;
+  className?: string;
 }
 
 const ChartPlaceholder = ({ 
   title, 
   description, 
-  height = 300 
+  height = 300,
+  className
 }: ChartPlaceholderProps) => {
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}

@@ -19,16 +19,18 @@ interface TablePlaceholderProps {
   description?: string;
   columns: Column[];
   rowCount?: number;
+  className?: string;
 }
 
 const TablePlaceholder = ({ 
   title, 
   description, 
   columns, 
-  rowCount = 5 
+  rowCount = 5,
+  className
 }: TablePlaceholderProps) => {
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
