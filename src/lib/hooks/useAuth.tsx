@@ -36,8 +36,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  // Start with John (employee) as the default user
-  const [currentUser, setCurrentUser] = useState<User | null>(users[0]);
+  // Start with Sara (management) as the default user
+  const [currentUser, setCurrentUser] = useState<User | null>(users[1]);
 
   const login = (userId: string) => {
     const user = users.find((u) => u.id === userId);
