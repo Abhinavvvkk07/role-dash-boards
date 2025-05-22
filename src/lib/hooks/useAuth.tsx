@@ -6,24 +6,24 @@ import { User, UserRole } from '@/types';
 const users: User[] = [
   {
     id: '1',
-    name: 'John Employee',
+    name: 'John',
     email: 'john@example.com',
     role: 'employee',
-    avatar: 'https://ui-avatars.com/api/?name=John+E&background=3b82f6&color=fff',
+    avatar: 'https://ui-avatars.com/api/?name=John&background=3b82f6&color=fff',
   },
   {
     id: '2',
-    name: 'Sarah Manager',
-    email: 'sarah@example.com',
+    name: 'Sara',
+    email: 'sara@example.com',
     role: 'management',
-    avatar: 'https://ui-avatars.com/api/?name=Sarah+M&background=3b82f6&color=fff',
+    avatar: 'https://ui-avatars.com/api/?name=Sara&background=3b82f6&color=fff',
   },
   {
     id: '3',
-    name: 'Alex Admin',
-    email: 'alex@example.com',
+    name: 'Lisa',
+    email: 'lisa@example.com',
     role: 'admin',
-    avatar: 'https://ui-avatars.com/api/?name=Alex+A&background=3b82f6&color=fff',
+    avatar: 'https://ui-avatars.com/api/?name=Lisa&background=3b82f6&color=fff',
   },
 ];
 
@@ -31,14 +31,13 @@ interface AuthContextType {
   currentUser: User | null;
   login: (userId: string) => void;
   logout: () => void;
-  switchUser: (userId: string) => void;
-  availableUsers: User[];
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(users[0]); // Default to first user
+  // Start with John (employee) as the default user
+  const [currentUser, setCurrentUser] = useState<User | null>(users[0]);
 
   const login = (userId: string) => {
     const user = users.find((u) => u.id === userId);
@@ -51,18 +50,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setCurrentUser(null);
   };
 
-  const switchUser = (userId: string) => {
-    login(userId);
-  };
-
   return (
     <AuthContext.Provider
       value={{
         currentUser,
         login,
         logout,
-        switchUser,
-        availableUsers: users,
       }}
     >
       {children}

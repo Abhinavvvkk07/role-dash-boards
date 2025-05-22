@@ -4,12 +4,28 @@ import TablePlaceholder from "@/components/dashboard/TablePlaceholder";
 import ChartPlaceholder from "@/components/dashboard/ChartPlaceholder";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { Check } from "lucide-react";
 
 const AdminDashboard = () => {
+  const { currentUser } = useAuth();
+
+  // Define features for admin role
+  const features = [
+    "User account management",
+    "Role and permission assignment",
+    "System configuration",
+    "Global metrics and analytics",
+    "Data backup and security settings",
+    "Integration with third-party services"
+  ];
+
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">System Overview</h2>
+        <h2 className="text-2xl font-bold tracking-tight">
+          Welcome, {currentUser?.name}! You are logged in as an admin.
+        </h2>
         <p className="text-muted-foreground">Complete administrative dashboard with system-wide metrics</p>
       </div>
       
@@ -35,6 +51,26 @@ const AdminDashboard = () => {
           description="Down from 0.12%"
         />
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl">Admin Dashboard</CardTitle>
+          <CardDescription>System-wide configuration and management</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            <h3 className="font-medium">Features:</h3>
+            <ul className="space-y-1 ml-5">
+              {features.map((feature, index) => (
+                <li key={index} className="flex items-start gap-2">
+                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <ChartPlaceholder 
@@ -88,19 +124,6 @@ const AdminDashboard = () => {
           className="lg:col-span-2"
         />
       </div>
-      
-      <TablePlaceholder 
-        title="User Management" 
-        description="All system users and roles"
-        columns={[
-          { header: "Name", width: "25%" },
-          { header: "Email", width: "25%" },
-          { header: "Role" },
-          { header: "Status" },
-          { header: "Last Active" },
-          { header: "Actions", width: "100px" },
-        ]}
-      />
     </div>
   );
 };

@@ -1,13 +1,12 @@
+
 import { useAuth } from '@/lib/hooks/useAuth';
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 const Navbar = () => {
-  const {
-    currentUser,
-    switchUser,
-    availableUsers
-  } = useAuth();
+  const { currentUser } = useAuth();
+
   return <header className="border-b bg-white shadow-sm">
       <div className="flex h-16 items-center px-4 md:px-6">
         <div className="flex items-center gap-2 mr-4">
@@ -37,24 +36,9 @@ const Navbar = () => {
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">{currentUser.name}</p>
                     <p className="text-xs leading-none text-muted-foreground">{currentUser.email}</p>
+                    <p className="text-xs leading-none text-muted-foreground capitalize mt-1">Role: {currentUser.role}</p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuLabel>Switch User</DropdownMenuLabel>
-                  {availableUsers.map(user => <DropdownMenuItem key={user.id} onClick={() => switchUser(user.id)} className="cursor-pointer">
-                      <div className="flex items-center gap-2">
-                        <Avatar className="h-6 w-6">
-                          <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback>
-                            {user.name.split(' ').map(n => n[0]).join('')}
-                          </AvatarFallback>
-                        </Avatar>
-                        <span>{user.name}</span>
-                        <span className="ml-auto text-xs capitalize text-muted-foreground">{user.role}</span>
-                      </div>
-                    </DropdownMenuItem>)}
-                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
                   Settings
@@ -68,4 +52,5 @@ const Navbar = () => {
       </div>
     </header>;
 };
+
 export default Navbar;

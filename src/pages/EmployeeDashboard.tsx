@@ -1,15 +1,27 @@
 
 import StatCard from "@/components/dashboard/StatCard";
-import RoleTabs from "@/components/dashboard/RoleTabs";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Check } from "lucide-react";
 
 const EmployeeDashboard = () => {
   const { currentUser } = useAuth();
 
+  // Define features for employee role
+  const features = [
+    "View and manage personal tasks",
+    "Track time spent on tasks",
+    "Submit reports and timesheets",
+    "View personal performance metrics",
+    "Access project documents and resources"
+  ];
+
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Welcome back, {currentUser?.name.split(' ')[0]}</h2>
+        <h2 className="text-2xl font-bold tracking-tight">
+          Welcome, {currentUser?.name}! You are logged in as an employee.
+        </h2>
         <p className="text-muted-foreground">Here's an overview of your tasks and performance.</p>
       </div>
       
@@ -36,9 +48,25 @@ const EmployeeDashboard = () => {
         />
       </div>
 
-      <div className="mt-8">
-        <RoleTabs />
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl">Employee Dashboard</CardTitle>
+          <CardDescription>Access your tasks and track your performance</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            <h3 className="font-medium">Features:</h3>
+            <ul className="space-y-1 ml-5">
+              {features.map((feature, index) => (
+                <li key={index} className="flex items-start gap-2">
+                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

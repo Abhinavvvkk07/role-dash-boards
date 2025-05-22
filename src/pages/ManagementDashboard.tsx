@@ -4,14 +4,27 @@ import TablePlaceholder from "@/components/dashboard/TablePlaceholder";
 import ChartPlaceholder from "@/components/dashboard/ChartPlaceholder";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Check } from "lucide-react";
 
 const ManagementDashboard = () => {
   const { currentUser } = useAuth();
 
+  // Define features for management role
+  const features = [
+    "Oversee team tasks and assignments",
+    "Review and approve timesheets",
+    "Track team performance metrics",
+    "Generate team reports",
+    "Manage resource allocation",
+    "Set team priorities and deadlines"
+  ];
+
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Team Dashboard</h2>
+        <h2 className="text-2xl font-bold tracking-tight">
+          Welcome, {currentUser?.name}! You are logged in as management.
+        </h2>
         <p className="text-muted-foreground">Management view of team performance and metrics</p>
       </div>
       
@@ -37,6 +50,26 @@ const ManagementDashboard = () => {
           description="$24,500/$36,000"
         />
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl">Management Dashboard</CardTitle>
+          <CardDescription>Team oversight and performance tracking</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            <h3 className="font-medium">Features:</h3>
+            <ul className="space-y-1 ml-5">
+              {features.map((feature, index) => (
+                <li key={index} className="flex items-start gap-2">
+                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-6">
         <Card className="lg:col-span-3">
@@ -74,24 +107,17 @@ const ManagementDashboard = () => {
         />
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <TablePlaceholder 
-          title="Team Performance" 
-          description="Individual team member metrics"
-          columns={[
-            { header: "Team Member", width: "30%" },
-            { header: "Tasks" },
-            { header: "Completion Rate" },
-            { header: "Hours" },
-            { header: "Status" },
-          ]}
-        />
-        
-        <ChartPlaceholder 
-          title="Monthly Productivity Trend" 
-          description="Team performance over the last 6 months"
-        />
-      </div>
+      <TablePlaceholder 
+        title="Team Performance" 
+        description="Individual team member metrics"
+        columns={[
+          { header: "Team Member", width: "30%" },
+          { header: "Tasks" },
+          { header: "Completion Rate" },
+          { header: "Hours" },
+          { header: "Status" },
+        ]}
+      />
     </div>
   );
 };
