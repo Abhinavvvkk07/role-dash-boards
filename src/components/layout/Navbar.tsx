@@ -1,37 +1,27 @@
-
 import { useAuth } from '@/lib/hooks/useAuth';
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 const Navbar = () => {
-  const { currentUser, switchUser, availableUsers } = useAuth();
-
-  return (
-    <header className="border-b bg-white shadow-sm">
+  const {
+    currentUser,
+    switchUser,
+    availableUsers
+  } = useAuth();
+  return <header className="border-b bg-white shadow-sm">
       <div className="flex h-16 items-center px-4 md:px-6">
         <div className="flex items-center gap-2 mr-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-6 w-6 text-blue-600"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-blue-600">
             <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
             <path d="M9 14h6" />
             <path d="M9 18h6" />
             <path d="M4 9h16" />
           </svg>
-          <span className="text-lg font-bold">App Dashboards</span>
+          <span className="text-lg font-bold">APP DASHBOARDS</span>
         </div>
         
         <nav className="ml-auto flex items-center gap-4 md:gap-6">
-          {currentUser && (
-            <DropdownMenu>
+          {currentUser && <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full" size="icon">
                   <Avatar>
@@ -52,12 +42,7 @@ const Navbar = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>Switch User</DropdownMenuLabel>
-                  {availableUsers.map((user) => (
-                    <DropdownMenuItem
-                      key={user.id}
-                      onClick={() => switchUser(user.id)}
-                      className="cursor-pointer"
-                    >
+                  {availableUsers.map(user => <DropdownMenuItem key={user.id} onClick={() => switchUser(user.id)} className="cursor-pointer">
                       <div className="flex items-center gap-2">
                         <Avatar className="h-6 w-6">
                           <AvatarImage src={user.avatar} alt={user.name} />
@@ -68,8 +53,7 @@ const Navbar = () => {
                         <span>{user.name}</span>
                         <span className="ml-auto text-xs capitalize text-muted-foreground">{user.role}</span>
                       </div>
-                    </DropdownMenuItem>
-                  ))}
+                    </DropdownMenuItem>)}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
@@ -79,12 +63,9 @@ const Navbar = () => {
                   Help
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+            </DropdownMenu>}
         </nav>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Navbar;
