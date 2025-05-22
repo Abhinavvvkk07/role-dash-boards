@@ -1,14 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '@/lib/hooks/useAuth';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const { currentUser } = useAuth();
+
+  // If the user is logged in, redirect them to the appropriate dashboard
+  if (currentUser) {
+    switch (currentUser.role) {
+      case 'admin':
+        return <Navigate to="/admin" replace />;
+      case 'management':
+        return <Navigate to="/management" replace />;
+      case 'employee':
+        return <Navigate to="/employee" replace />;
+      default:
+        return <Navigate to="/employee" replace />;
+    }
+  }
+
+  // If we somehow get here, redirect to home
+  return <Navigate to="/" replace />;
 };
 
 export default Index;
