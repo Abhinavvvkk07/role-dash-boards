@@ -1,11 +1,17 @@
-
 import { useAuth } from '@/lib/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return <header className="border-b bg-white shadow-sm">
       <div className="flex h-16 items-center px-4 md:px-6">
@@ -22,8 +28,8 @@ const Navbar = () => {
         <nav className="ml-auto flex items-center gap-4 md:gap-6">
           {currentUser && <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full" size="icon">
-                  <Avatar>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
                     <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
                     <AvatarFallback>
                       {currentUser.name.split(' ').map(n => n[0]).join('')}
@@ -32,7 +38,7 @@ const Navbar = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel>
+                <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">{currentUser.name}</p>
                     <p className="text-xs leading-none text-muted-foreground">{currentUser.email}</p>
@@ -40,11 +46,8 @@ const Navbar = () => {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer">
-                  Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  Help
+                <DropdownMenuItem onClick={handleLogout}>
+                  Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>}

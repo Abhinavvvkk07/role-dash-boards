@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -10,7 +9,7 @@ import { AuthProvider } from "@/lib/hooks/useAuth";
 import AppLayout from "@/components/layout/AppLayout";
 
 // Pages
-import Home from "@/pages/Home";
+import Login from "@/pages/Login";
 import EmployeeDashboard from "@/pages/EmployeeDashboard";
 import ManagementDashboard from "@/pages/ManagementDashboard";
 import AdminDashboard from "@/pages/AdminDashboard";
@@ -26,7 +25,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login />} />
             
             {/* Protected Routes */}
             <Route element={<AppLayout />}>

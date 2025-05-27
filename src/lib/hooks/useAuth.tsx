@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { User, UserRole } from '@/types';
 
@@ -36,8 +35,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  // Start with Sara (management) as the default user
-  const [currentUser, setCurrentUser] = useState<User | null>(users[1]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const login = (userId: string) => {
     const user = users.find((u) => u.id === userId);
