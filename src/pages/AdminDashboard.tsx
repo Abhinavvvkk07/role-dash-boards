@@ -1,24 +1,17 @@
-
 import StatCard from "@/components/dashboard/StatCard";
 import TablePlaceholder from "@/components/dashboard/TablePlaceholder";
 import ChartPlaceholder from "@/components/dashboard/ChartPlaceholder";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { Check } from "lucide-react";
+import { Users, Lock, Settings, BarChart2, HardDrive, Link2 } from "lucide-react";
 
 const AdminDashboard = () => {
   const { currentUser } = useAuth();
-
-  // Define features for admin role
-  const features = [
-    "User account management",
-    "Role and permission assignment",
-    "System configuration",
-    "Global metrics and analytics",
-    "Data backup and security settings",
-    "Integration with third-party services"
-  ];
 
   return (
     <div className="space-y-6">
@@ -52,78 +45,202 @@ const AdminDashboard = () => {
         />
       </div>
 
+      {/* 👥 User Account Management */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Admin Dashboard</CardTitle>
-          <CardDescription>System-wide configuration and management</CardDescription>
+          <div className="flex items-center gap-2">
+            <Users className="h-5 w-5 text-primary" />
+            <CardTitle>User Account Management</CardTitle>
+          </div>
+          <CardDescription>Manage user accounts and their statuses</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            <h3 className="font-medium">Features:</h3>
-            <ul className="space-y-1 ml-5">
-              {features.map((feature, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
+          <TablePlaceholder
+            title="User Accounts"
+            description="All registered users in the system"
+            columns={[
+              { header: "Name", width: "25%" },
+              { header: "Email", width: "30%" },
+              { header: "Role", width: "20%" },
+              { header: "Status", width: "15%" },
+              { header: "Actions", width: "10%" }
+            ]}
+            rowCount={5}
+          />
+        </CardContent>
+      </Card>
+
+      {/* 🔐 Role & Permission Assignment */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Lock className="h-5 w-5 text-primary" />
+            <CardTitle>Role & Permission Assignment</CardTitle>
+          </div>
+          <CardDescription>Assign roles and permissions to users</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex gap-4">
+            <Select>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Select User" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="user1">John Doe</SelectItem>
+                <SelectItem value="user2">Jane Smith</SelectItem>
+                <SelectItem value="user3">Bob Johnson</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Set Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="employee">Employee</SelectItem>
+                <SelectItem value="manager">Manager</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button>Apply Changes</Button>
           </div>
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <ChartPlaceholder 
-          title="User Activity" 
-          description="Active users over the last 30 days"
-        />
-        
-        <ChartPlaceholder 
-          title="Resource Utilization" 
-          description="CPU, Memory, and Storage usage"
-        />
-      </div>
-      
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Card className="lg:col-span-1">
+      {/* ⚙️ System Configuration */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Settings className="h-5 w-5 text-primary" />
+            <CardTitle>System Configuration</CardTitle>
+          </div>
+          <CardDescription>Configure system-wide settings and defaults</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="notifications">Enable Notifications</Label>
+                <Switch id="notifications" />
+              </div>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="analytics">Enable Analytics</Label>
+                <Switch id="analytics" />
+              </div>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="maintenance">Maintenance Mode</Label>
+                <Switch id="maintenance" />
+              </div>
+            </div>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Select Timezone" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="utc">UTC</SelectItem>
+                <SelectItem value="est">EST</SelectItem>
+                <SelectItem value="pst">PST</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* 📊 Global Metrics & Analytics */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card>
           <CardHeader>
-            <CardTitle>System Health</CardTitle>
-            <CardDescription>Current status of all services</CardDescription>
+            <div className="flex items-center gap-2">
+              <BarChart2 className="h-5 w-5 text-primary" />
+              <CardTitle>System Usage</CardTitle>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {[
-                { name: "API Gateway", status: "operational" },
-                { name: "Authentication", status: "operational" },
-                { name: "Database", status: "operational" },
-                { name: "Storage", status: "degraded" },
-                { name: "Analytics", status: "operational" },
-                { name: "Email Service", status: "operational" },
-                { name: "Task Queue", status: "operational" },
-              ].map((service, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <span className="text-sm">{service.name}</span>
-                  <Badge variant={service.status === "operational" ? "outline" : "destructive"} className="capitalize">
-                    {service.status}
-                  </Badge>
-                </div>
-              ))}
-            </div>
+            <ChartPlaceholder 
+              title="System Usage Overview" 
+              description="Active users over time"
+              height={200}
+            />
           </CardContent>
         </Card>
-        
-        <TablePlaceholder 
-          title="Recent System Events" 
-          description="Latest system logs and notifications"
-          columns={[
-            { header: "Event", width: "40%" },
-            { header: "Source" },
-            { header: "Type" },
-            { header: "Time" },
-          ]}
-          className="lg:col-span-2"
-        />
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <BarChart2 className="h-5 w-5 text-primary" />
+              <CardTitle>Error Rate</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ChartPlaceholder 
+              title="System Error Rate" 
+              description="Errors over time"
+              height={200}
+            />
+          </CardContent>
+        </Card>
       </div>
+
+      {/* 💾 Data Backup & Security Settings */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <HardDrive className="h-5 w-5 text-primary" />
+            <CardTitle>Data Backup & Security Settings</CardTitle>
+          </div>
+          <CardDescription>Manage system backups and security</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              <Button className="flex-1">Run Backup Now</Button>
+              <Button className="flex-1" variant="outline">Schedule Backup</Button>
+              <Button className="flex-1" variant="outline">View Audit Logs</Button>
+            </div>
+            <div className="rounded-lg border p-4">
+              <h4 className="font-medium mb-2">Last Backup Status</h4>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Last successful backup:</span>
+                <Badge variant="outline">2 hours ago</Badge>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* 🔗 Third-Party Integrations */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Link2 className="h-5 w-5 text-primary" />
+            <CardTitle>Third-Party Integrations</CardTitle>
+          </div>
+          <CardDescription>Manage external service connections</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium">NexusPay</h4>
+                <p className="text-sm text-muted-foreground">Payment processing service</p>
+              </div>
+              <Button variant="outline">Setup Integration</Button>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium">Slack</h4>
+                <p className="text-sm text-muted-foreground">Team communication</p>
+              </div>
+              <Badge>Connected</Badge>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium">Google Workspace</h4>
+                <p className="text-sm text-muted-foreground">Productivity suite</p>
+              </div>
+              <Button variant="outline">Connect</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
