@@ -4,7 +4,7 @@ A responsive, role-based dashboard application built with Vite, React, TypeScrip
 
 ---
 
-## 🚀 Features
+## 🚀 Featuress
 
 - ✅ Role-based login (Employee, Management, Admin)
 - 🎯 Auto-redirect to respective dashboards after login
