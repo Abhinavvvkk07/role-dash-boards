@@ -8,7 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { Users, Lock, Settings, BarChart2, HardDrive, Link2 } from "lucide-react";
+import { Users, Lock, Settings, BarChart2, HardDrive, Link2, MessageSquare } from "lucide-react";
+import { TeamChat } from "@/components/chat/TeamChat";
 
 const AdminDashboard = () => {
   const { currentUser } = useAuth();
@@ -106,6 +107,20 @@ const AdminDashboard = () => {
         </CardContent>
       </Card>
 
+      {/* 💬 Team Chat */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <MessageSquare className="h-5 w-5 text-primary" />
+            <CardTitle>Team Communication</CardTitle>
+          </div>
+          <CardDescription>Chat with team members and manage communications</CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <TeamChat variant="compact" height="600px" />
+        </CardContent>
+      </Card>
+
       {/* ⚙️ System Configuration */}
       <Card>
         <CardHeader>
@@ -198,8 +213,8 @@ const AdminDashboard = () => {
             <div className="rounded-lg border p-4">
               <h4 className="font-medium mb-2">Last Backup Status</h4>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">Last successful backup:</span>
-                <Badge variant="outline">2 hours ago</Badge>
+                <Badge variant="outline">Success</Badge>
+                <span className="text-sm text-muted-foreground">Today at 03:00 AM</span>
               </div>
             </div>
           </div>
